@@ -3,8 +3,8 @@ import edu.virginia.cs2110.Mp3FilePlayer;
 /**
  * 
  * @author Jeffrey Cannon jmc5fm
- * @author Trisha Hajela th5yr 
- * Homework 2 
+ * @author Adam Gauthier atg3ee 
+ * Homework 3 
  * Section 100
  * 
  */
@@ -152,7 +152,7 @@ public class Song implements Comparable<Song>, Playable {
 	}
 
 	/**
-	 * Plays this for the specified number of seconds.
+	 * Plays this Song for the specified number of seconds.
 	 * 
 	 * @param sec
 	 *            Number of seconds to play song

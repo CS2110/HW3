@@ -8,8 +8,8 @@ import java.util.Scanner;
 /**
  * 
  * @author Jeffrey Cannon jmc5fm
- * @author Trisha Hajela th5yr 
- * Homework 2 
+ * @author Adam Gauthier 
+ * Homework 3 
  * Section 100
  * 
  *         Sources:
@@ -156,10 +156,11 @@ public class PlayList implements Playable {
 		// Iterate through the file
 		while (true) {
 			title = lineChecker(reader);
-			
+
 			// See if lineChecker reached the end of the file
-			if (title.equals("")) break;
-			
+			if (title.equals(""))
+				break;
+
 			artist = lineChecker(reader);
 			time = lineChecker(reader).split(":");
 			minutes = Integer.parseInt(time[0]);
@@ -175,16 +176,17 @@ public class PlayList implements Playable {
 				// This is a Song
 				f = new File(filename);
 				if (!f.exists()) {
-					System.err.println("File not found!");
+					System.out.println("File not found!");
 					reader.close();
 					return false;
 				}
 				p = new Song(artist, title, minutes, seconds, filename);
 			}
-			
+
 			this.addPlayable(p);
 		}
-		
+
+		System.out.println("Media done loading.");
 		reader.close();
 		return true;
 	}
@@ -202,14 +204,18 @@ public class PlayList implements Playable {
 		String str = "";
 		while (reader.hasNextLine()) {
 			str = reader.nextLine().trim();
-			if (str.indexOf("//") == 0) continue;
-			else if (str.length() == 0) continue;
-			else break;
+			if (str.indexOf("//") == 0)
+				continue;
+			else if (str.length() == 0)
+				continue;
+			else
+				break;
 		}
-		if (str.indexOf("//") == -1) return str;
+		if (str.indexOf("//") == -1)
+			return str;
 		return str.substring(0, str.indexOf("//")).trim();
 	}
-	
+
 	/**
 	 * Removes all Playables.
 	 * 
@@ -240,7 +246,7 @@ public class PlayList implements Playable {
 	 *         in the PlayList
 	 */
 	public boolean addPlaylist(PlayList p) {
-		if (playableList.contains(p))
+		if (playableList.contains(p) || this.equals(p))
 			return false;
 		return playableList.add(p);
 	}
@@ -345,7 +351,7 @@ public class PlayList implements Playable {
 			return String.format("%02d:%02d", minutes, seconds);
 		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
 	}
-	
+
 	/**
 	 * Adds either a Song or Video to this PlayList
 	 * 
@@ -355,6 +361,20 @@ public class PlayList implements Playable {
 	 */
 	public boolean addPlayable(Playable p) {
 		return this.playableList.add(p);
+	}
+
+	/**
+	 * Prints this PlayList with only the names of the Playables it contains.
+	 * 
+	 * @return Shortened String representation of this PlayList.
+	 */
+	public String shortToString() {
+		String str = "{PlayList name=" + this.name + " playableList=";
+		for (Playable p : this.playableList) {
+			str += (p.getName() + ";");
+		}
+		str += "}";
+		return str;
 	}
 
 	/**
