@@ -4,9 +4,7 @@ import java.net.URI;
 /**
  * 
  * @author Jeffrey Cannon jmc5fm
- * @author Adam Gauthier atg3ee 
- * Homework 3 
- * Section 100
+ * @author Adam Gauthier atg3ee Homework 3 Section 100
  * 
  */
 public class Video implements Playable {

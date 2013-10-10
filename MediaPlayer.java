@@ -1,7 +1,3 @@
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 /**
  * 
  * @author Jeffrey Cannon jmc5fm
@@ -10,6 +6,11 @@ import java.util.Scanner;
  * Section 100
  * 
  */
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+
 public class MediaPlayer {
 
 	private ArrayList<PlayList> playLists;

@@ -8,9 +8,7 @@ import java.util.Scanner;
 /**
  * 
  * @author Jeffrey Cannon jmc5fm
- * @author Adam Gauthier 
- * Homework 3 
- * Section 100
+ * @author Adam Gauthier Homework 3 Section 100
  * 
  *         Sources:
  *         http://docs.oracle.com/javase/tutorial/java/data/numberformat.html -
@@ -163,8 +161,13 @@ public class PlayList implements Playable {
 
 			artist = lineChecker(reader);
 			time = lineChecker(reader).split(":");
-			minutes = Integer.parseInt(time[0]);
-			seconds = Integer.parseInt(time[1]);
+			try {
+				minutes = Integer.parseInt(time[0]);
+				seconds = Integer.parseInt(time[1]);
+			} catch (NumberFormatException ex) {
+				System.out.println("Incorrect time format detected.");
+				return false;
+			}
 			filename = lineChecker(reader);
 
 			if (filename.toLowerCase().startsWith(vidHeader)) {
@@ -176,7 +179,8 @@ public class PlayList implements Playable {
 				// This is a Song
 				f = new File(filename);
 				if (!f.exists()) {
-					System.out.println("MP3 file not found! Check the specified file that MP3 file names are spelled correctly.");
+					System.out
+							.println("MP3 file not found! Check the specified file that MP3 file names are spelled correctly.");
 					reader.close();
 					return false;
 				}
@@ -360,6 +364,8 @@ public class PlayList implements Playable {
 	 * @return True if the Playable was successfully added, false otherwise.
 	 */
 	public boolean addPlayable(Playable p) {
+		if (this.equals(p))
+			return false;
 		return this.playableList.add(p);
 	}
 

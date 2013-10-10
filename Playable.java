@@ -1,13 +1,10 @@
-
 /**
  * 
- * @author Jeffrey Cannon jmc5fm 
- * Homework 2 
- * Section 100
+ * @author Jeffrey Cannon jmc5fm Homework 2 Section 100
  * 
  */
 public interface Playable {
-	
+
 	/**
 	 * Plays a Playable object
 	 */
@@ -32,5 +29,5 @@ public interface Playable {
 	 * @return Length of Playable object in seconds.
 	 */
 	public int getPlayTimeSeconds();
-	
+
 }
