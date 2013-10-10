@@ -90,6 +90,8 @@ public class Video implements Playable {
 	@Override
 	public void play(double seconds) {
 		try {
+			System.out.printf("Playing Video: user=%-20s title=%s\n",
+					this.user, this.title);
 			Desktop.getDesktop().browse(new URI(videoName + "?autoplay=1"));
 			Thread.sleep((int) (1000 * (seconds + BLOCK_ADJUSTMENT))); // block
 																		// for

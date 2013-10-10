@@ -47,7 +47,7 @@ public class MediaPlayer {
 	 */
 	@Override
 	public String toString() {
-		String str = "{";
+		String str = "{MediaPlayer playLists=";
 		for (PlayList p : this.playLists) {
 			str += (p.getName() + ";");
 		}
@@ -92,9 +92,14 @@ public class MediaPlayer {
 		// initial prompt
 		Scanner keyboard;
 		while (true) {
-			System.out.print("Enter a file name for the default playlist: ");
+			System.out.print("Enter a file name for the default playlist or 'exit' to quit: ");
 			keyboard = new Scanner(System.in);
 			String fileName = keyboard.nextLine();
+			if (fileName.equalsIgnoreCase("exit")) {
+				System.out.println("Successfully exited the program.");
+				run = false;
+				break;
+			}
 			if (this.getDefaultPlayList().loadMedia(fileName)) {
 				break;
 			}

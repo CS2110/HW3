@@ -176,7 +176,7 @@ public class PlayList implements Playable {
 				// This is a Song
 				f = new File(filename);
 				if (!f.exists()) {
-					System.out.println("File not found!");
+					System.out.println("MP3 file not found! Check the specified file that MP3 file names are spelled correctly.");
 					reader.close();
 					return false;
 				}
