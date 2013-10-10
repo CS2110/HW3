@@ -131,7 +131,7 @@ public class PlayList implements Playable {
 	 * @return True if the file was successfully read and songs were added to
 	 *         the list, false otherwise.
 	 */
-	public boolean loadSongs(String fileName) {
+	public boolean loadMedia(String fileName) {
 		// Create a File object and try to create a Scanner to read from it
 		File file = new File(fileName);
 		Scanner reader = null;
@@ -143,38 +143,61 @@ public class PlayList implements Playable {
 		}
 
 		// Declare placeholder variables
-		Song s;
+		Playable p = null;
 		String title;
 		String artist;
 		String[] time;
 		String filename;
+		String vidHeader = "youtube:";
 		int minutes;
 		int seconds;
 		File f;
 
 		// Iterate through the file
-		while (reader.hasNextLine()) {
-			title = reader.nextLine().trim();
-			artist = reader.nextLine().trim();
-			time = reader.nextLine().trim().split(":");
+		while (true) {
+			title = lineChecker(reader);
+			
+			// See if lineChecker reached the end of the file
+			if (title.equals("")) break;
+			
+			artist = lineChecker(reader);
+			time = lineChecker(reader).split(":");
 			minutes = Integer.parseInt(time[0]);
 			seconds = Integer.parseInt(time[1]);
-			filename = reader.nextLine().trim();
-			f = new File(filename);
-			if (!f.exists()) {
-				System.err.println("File not found!");
-				reader.close();
-				return false;
+			filename = lineChecker(reader);
+
+			if (filename.toLowerCase().startsWith(vidHeader)) {
+				// This is a Video
+				String link = filename.substring(vidHeader.length());
+				String prefix = "http://";
+				p = new Video(artist, title, minutes, seconds, prefix + link);
+			} else {
+				// This is a Song
+				f = new File(filename);
+				if (!f.exists()) {
+					System.err.println("File not found!");
+					reader.close();
+					return false;
+				}
+				p = new Song(artist, title, minutes, seconds, filename);
 			}
-			s = new Song(artist, title, minutes, seconds, filename);
-			addSong(s);
-			reader.nextLine();
+			
+			this.addPlayable(p);
 		}
+		
 		reader.close();
 		return true;
 	}
-		
-	/*
+
+	/**
+	 * Parse's the Scanner's input to remove unwanted information such as white
+	 * space and comments.
+	 * 
+	 * @param reader
+	 *            Scanner of a File
+	 * @return Trimmed String from the next line in the Scanner that isn't white
+	 *         space or strictly a comment.
+	 */
 	private String lineChecker(Scanner reader) {
 		String str = "";
 		while (reader.hasNextLine()) {
@@ -186,7 +209,6 @@ public class PlayList implements Playable {
 		if (str.indexOf("//") == -1) return str;
 		return str.substring(0, str.indexOf("//")).trim();
 	}
-	*/
 	
 	/**
 	 * Removes all Playables.
@@ -323,6 +345,17 @@ public class PlayList implements Playable {
 			return String.format("%02d:%02d", minutes, seconds);
 		return String.format("%02d:%02d:%02d", hours, minutes, seconds);
 	}
+	
+	/**
+	 * Adds either a Song or Video to this PlayList
+	 * 
+	 * @param p
+	 *            Playable to be added to this PlayList
+	 * @return True if the Playable was successfully added, false otherwise.
+	 */
+	public boolean addPlayable(Playable p) {
+		return this.playableList.add(p);
+	}
 
 	/**
 	 * For testing purposes
@@ -331,7 +364,7 @@ public class PlayList implements Playable {
 	 */
 	public static void main(String[] args) {
 		PlayList p = new PlayList();
-		System.out.println(p.loadSongs("test.txt"));
+		System.out.println(p.loadMedia("test.txt"));
 		System.out.println(p);
 		System.out.println(p.totalPlayTime());
 		System.out.println(p.getPlayTimeSeconds());

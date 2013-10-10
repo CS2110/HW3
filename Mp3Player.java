@@ -61,7 +61,7 @@ public class Mp3Player {
 		System.out.print("Enter a file name: ");
 		Scanner keyboard = new Scanner(System.in);
 		String fileName = keyboard.nextLine();
-		this.getDefaultPlayList().loadSongs(fileName);
+		this.getDefaultPlayList().loadMedia(fileName);
 
 		for (Playable p : playLists) {
 			p.play(5);
