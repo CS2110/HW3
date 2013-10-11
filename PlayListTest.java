@@ -1,13 +1,14 @@
-/**
- * This is a class to test certain methods of the project.
- * @Author Jeffrey Cannon (jmc5fm)
- * @Author Adam Gauthier (atg3ee)
- * Homework 3 Section 100
- */
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * This is a class to test certain methods of the project.
+ * @Author Jeffrey Cannon (jmc5fm)
+ * @Author Adam Gauthier (atg3ee)
+ * Homework 3 
+ * Section 100
+ */
 public class PlayListTest {
 
 	@Test

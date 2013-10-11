@@ -8,7 +8,9 @@ import java.util.Scanner;
 /**
  * 
  * @author Jeffrey Cannon jmc5fm
- * @author Adam Gauthier Homework 3 Section 100
+ * @author Adam Gauthier atg3ee
+ * Homework 3 
+ * Section 100
  * 
  *         Sources:
  *         http://docs.oracle.com/javase/tutorial/java/data/numberformat.html -
@@ -165,7 +167,7 @@ public class PlayList implements Playable {
 				minutes = Integer.parseInt(time[0]);
 				seconds = Integer.parseInt(time[1]);
 			} catch (NumberFormatException ex) {
-				System.out.println("Incorrect time format detected.");
+				System.out.println("Incorrect time format detected in the specified file.");
 				return false;
 			}
 			filename = lineChecker(reader);

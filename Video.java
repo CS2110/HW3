@@ -4,14 +4,16 @@ import java.net.URI;
 /**
  * 
  * @author Jeffrey Cannon jmc5fm
- * @author Adam Gauthier atg3ee Homework 3 Section 100
+ * @author Adam Gauthier atg3ee 
+ * Homework 3 
+ * Section 100
  * 
  */
 public class Video implements Playable {
 
 	private String videoName;
-	private double minutes;
-	private double seconds;
+	private int minutes;
+	private int seconds;
 	private String user;
 	private String title;
 
@@ -35,7 +37,7 @@ public class Video implements Playable {
 		return minutes;
 	}
 
-	public void setMinutes(double minutes) {
+	public void setMinutes(int minutes) {
 		this.minutes = minutes;
 	}
 
@@ -51,7 +53,7 @@ public class Video implements Playable {
 	 * @param seconds
 	 *            Number of seconds in length (Always less than 60)
 	 */
-	public void setSeconds(double seconds) {
+	public void setSeconds(int seconds) {
 		if (seconds < 60)
 			this.seconds = seconds;
 		else {
@@ -86,12 +88,12 @@ public class Video implements Playable {
 	}
 
 	@Override
-	public void play(double seconds) {
+	public void play(double sec) {
 		try {
 			System.out.printf("Playing Video: user=%-20s title=%s\n",
 					this.user, this.title);
 			Desktop.getDesktop().browse(new URI(videoName + "?autoplay=1"));
-			Thread.sleep((int) (1000 * (seconds + BLOCK_ADJUSTMENT))); // block
+			Thread.sleep((int) (1000 * (sec + BLOCK_ADJUSTMENT))); // block
 																		// for
 																		// length
 																		// of
@@ -109,11 +111,20 @@ public class Video implements Playable {
 
 	@Override
 	public int getPlayTimeSeconds() {
-		return (int) (this.minutes * 60 + this.seconds);
+		return this.minutes * 60 + this.seconds;
 	}
 
 	// --------------------
-
+	
+	/**
+	 * Designated Constructor for Video.
+	 * 
+	 * @param user User who uploaded the Video
+	 * @param title Name of the Video
+	 * @param min Number of minutes in the Video
+	 * @param sec Number of seconds in the Video (Always less than 60)
+	 * @param videoName Link of the Video on YouTube
+	 */
 	public Video(String user, String title, int min, int sec, String videoName) {
 		this.user = user;
 		this.title = title;
@@ -136,12 +147,12 @@ public class Video implements Playable {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (o instanceof Song) {
+		if (o instanceof Video) {
 			Video v = (Video) o;
 			return this.user.equalsIgnoreCase(v.user)
 					&& this.title.equalsIgnoreCase(v.title)
-					&& (int) this.minutes == (int) v.minutes
-					&& (int) this.seconds == (int) v.seconds
+					&& this.minutes == v.minutes
+					&& this.seconds == v.seconds
 					&& this.videoName.equalsIgnoreCase(v.videoName);
 		}
 		return false;
@@ -155,7 +166,12 @@ public class Video implements Playable {
 		return "{Video: title=" + this.title + " user=" + this.user
 				+ " minutes=" + this.minutes + " seconds=" + this.seconds + "}";
 	}
-
+	
+	/**
+	 * Test main method for Video.
+	 * 
+	 * @param args Unused parameter
+	 */
 	public static void main(String[] args) {
 		Video v1 = new Video("jimvwmoss", "The Sneezing Baby Panda", 0, 17,
 				"http://www.youtube.com/embed/4hpEnLtqUDg");

@@ -1,6 +1,9 @@
 /**
  * 
- * @author Jeffrey Cannon jmc5fm Homework 2 Section 100
+ * @author Jeffrey Cannon jmc5fm
+ * @author Adam Gauthier atg3ee 
+ * Homework 3 
+ * Section 100
  * 
  */
 public interface Playable {

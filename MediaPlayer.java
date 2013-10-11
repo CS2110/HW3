@@ -1,3 +1,7 @@
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 /**
  * 
  * @author Jeffrey Cannon jmc5fm
@@ -6,11 +10,6 @@
  * Section 100
  * 
  */
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-
 public class MediaPlayer {
 
 	private ArrayList<PlayList> playLists;
@@ -121,65 +120,61 @@ public class MediaPlayer {
 				param[i] = args[i + 1];
 			}
 			switch (cmd) {
-			case "help":
-				this.printCommands();
-				break;
-			case "mkplay":
-				if (param.length != 1) {
-					System.out
-							.println("Invalid syntax for 'mkplay'. Should be of the form: mkplay [--playlist-name]");
-				} else {
-					if (this.addPlayList(new PlayList(param[0]))) {
-						System.out.println("Playlist created.");
+				case "help":
+					this.printCommands();
+					break;
+				case "mkplay":
+					if (param.length != 1) {
+						System.out.println("Invalid syntax for 'mkplay'. Should be of the form: mkplay [--playlist-name]");
 					} else {
-						System.out
-								.println("A playlist by that name has already been created.");
+						if (this.addPlayList(new PlayList(param[0]))) {
+							System.out.println("Playlist created.");
+						} else {
+							System.out.println("A playlist by that name has already been created.");
+						}
 					}
-				}
-				break;
-			case "load":
-				this.loadMedia(param);
-				break;
-			case "addm":
-				this.addSong(param);
-				break;
-			case "addp":
-				this.addPlayLists(param);
-				break;
-			case "playp":
-				this.playAll(param);
-				break;
-			case "print":
-				if (param.length != 1) {
-					System.out
-							.println("Invalid syntax for 'print'. Should be of the form: print [--playlist-name]");
-				} else {
-					PlayList p = new PlayList(param[0]);
-					int index = this.playLists.indexOf(p);
-					if (index < 0) {
-						System.out
-								.println("The specified playlist hasn't been created.");
+					break;
+				case "load":
+					this.loadMedia(param);
+					break;
+				case "addm":
+					this.addSong(param);
+					break;
+				case "addp":
+					this.addPlayLists(param);
+					break;
+				case "playp":
+					this.playAll(param);
+					break;
+				case "print":
+					if (param.length != 1) {
+						System.out.println("Invalid syntax for 'print'. Should be of the form: print [--playlist-name]");
 					} else {
-						System.out.println(this.playLists.get(index));
+						PlayList p = new PlayList(param[0]);
+						int index = this.playLists.indexOf(p);
+						if (index < 0) {
+							System.out.println("The specified playlist hasn't been created.");
+						} else {
+							System.out.println(this.playLists.get(index));
+						}
 					}
-				}
-				break;
-			case "playm":
-				this.playSong(param);
-				break;
-			case "def":
-				System.out.println(this.getDefaultPlayList().shortToString());
-				break;
-			case "all":
-				System.out.println(this);
-				break;
-			case "exit":
-				System.out.println("Successfully exited the program.");
-				run = false;
-				break;
-			default:
-				System.out.println("Invalid command.");
-				break;
+					break;
+				case "playm":
+					this.playSong(param);
+					break;
+				case "def":
+					System.out.println(this.getDefaultPlayList().shortToString());
+					break;
+				case "all":
+					System.out.println(this);
+					break;
+				case "exit":
+					System.out.println("Successfully exited the program.");
+					run = false;
+					break;
+				default:
+					System.out.println("Invalid command.");
+					break;
 			}
 		}
 
@@ -192,19 +187,19 @@ public class MediaPlayer {
 	 */
 	public void printCommands() {
 		String[] cmds = { "help", "mkplay", "load", "addm", "addp", "playp",
-				"print", "playm", "def", "all", "exit" };
+			"print", "playm", "def", "all", "exit" };
 		String[] descriptions = {
-				"Prints the description of all the commands for this command line interface.",
-				"Creates a new playlist with the specified name. All playlists must be instantiated with this command before they can be used. (ex: mkplay [--playlist-name])",
-				"Loads song or video information into an existing playlist from a data file, given a data-file name and the name of the playlist to update. If called with a playlist that already has data, this adds songs or videos to the end of the existing playlist. (ex: load [--data-file] [--playlist-name])",
-				"Adds songs directly by providing the MP3 file name and the name of an existing playlist. (ex: addm [--mp3-file] [--playlist-name])",
-				"Adds a playlist to the end of a given playlist, given the names of both playlists. Playlists cannot be added to themselves. (ex: addp [--playlist-name] [--playlist-being-added])",
-				"Plays all songs, videos, or playlists stored in a playlist, given the playlist name. It is optional to specify the number of seconds to play of each song. Videos must play until completion. (ex: playp [--playlist-name] (OPTIONAL:[--seconds]))",
-				"Prints the contents of a named playlist, printing details of all songs, videos, and playlists it contains. (ex: print [--playlist-name])",
-				"Plays a given MP3 file, given the file-name. The user can optionally specify how many seconds to play. (ex: playm [--mp3-file] (OPTIONAL:[--seconds]))",
-				"Prints just the titles or names of all songs, videos, or playlists stored in the default playlist.",
-				"Prints the names of all playlists stored by the application, including the default playlist 'playlist'.",
-				"Exits this command line interface." };
+			"Prints the description of all the commands for this command line interface.",
+			"Creates a new playlist with the specified name. All playlists must be instantiated with this command before they can be used. (ex: mkplay [--playlist-name])",
+			"Loads song or video information into an existing playlist from a data file, given a data-file name and the name of the playlist to update. If called with a playlist that already has data, this adds songs or videos to the end of the existing playlist. (ex: load [--data-file] [--playlist-name])",
+			"Adds songs directly by providing the MP3 file name and the name of an existing playlist. (ex: addm [--mp3-file] [--playlist-name])",
+			"Adds a playlist to the end of a given playlist, given the names of both playlists. Playlists cannot be added to themselves. (ex: addp [--playlist-name] [--playlist-being-added])",
+			"Plays all songs, videos, or playlists stored in a playlist, given the playlist name. It is optional to specify the number of seconds to play of each song. Videos must play until completion. (ex: playp [--playlist-name] (OPTIONAL:[--seconds]))",
+			"Prints the contents of a named playlist, printing details of all songs, videos, and playlists it contains. (ex: print [--playlist-name])",
+			"Plays a given MP3 file, given the file-name. The user can optionally specify how many seconds to play. (ex: playm [--mp3-file] (OPTIONAL:[--seconds]))",
+			"Prints just the titles or names of all songs, videos, or playlists stored in the default playlist.",
+			"Prints the names of all playlists stored by the application, including the default playlist 'playlist'.",
+			"Exits this command line interface." };
 		for (int i = 0; i < cmds.length; i++) {
 			System.out.printf("%6s\t\t%s\n", cmds[i], descriptions[i]);
 		}
@@ -221,8 +216,7 @@ public class MediaPlayer {
 	 */
 	public void loadMedia(String[] param) {
 		if (param.length != 2) {
-			System.out
-					.println("Invalid syntax for 'load'. Should be of the form: load [--data-file] [--playlist-name]");
+			System.out.println("Invalid syntax for 'load'. Should be of the form: load [--data-file] [--playlist-name]");
 		} else {
 			PlayList p = new PlayList(param[1]);
 			int index = this.playLists.indexOf(p);
@@ -244,8 +238,7 @@ public class MediaPlayer {
 	 */
 	public void addSong(String[] param) {
 		if (param.length != 2) {
-			System.out
-					.println("Invalid syntax for 'addm'. Should be of the form: addm [--mp3-file] [--playlist-name]");
+			System.out.println("Invalid syntax for 'addm'. Should be of the form: addm [--mp3-file] [--playlist-name]");
 		} else {
 			PlayList p = new PlayList(param[1]);
 			int index = playLists.indexOf(p);
@@ -274,18 +267,16 @@ public class MediaPlayer {
 	 */
 	public void addPlayLists(String[] param) {
 		if (param.length != 2) {
-			System.out
-					.println("Invalid syntax for 'addp'. Should be of the form: addp [--playlist-name] [--playlist-being-added]");
+			System.out.println("Invalid syntax for 'addp'. Should be of the form: addp [--playlist-name] [--playlist-being-added]");
 		} else {
-			PlayList p[] = new PlayList[2];
-			int index[] = new int[2];
+			PlayList[] p = new PlayList[2];
+			int[] index = new int[2];
 			boolean valid = true;
 			for (int i = 0; i < p.length; i++) {
 				p[i] = new PlayList(param[i]);
 				index[i] = playLists.indexOf(p[i]);
 				if (index[i] < 0) {
-					System.out
-							.println("At least one of the specified playlists haven't been created.");
+					System.out.println("At least one of the specified playlists haven't been created.");
 					valid = false;
 					break;
 				}
@@ -295,8 +286,7 @@ public class MediaPlayer {
 						this.playLists.get(index[1]))) {
 					System.out.println("Playlist added.");
 				} else {
-					System.out
-							.println("Could not carry out this command. The specified playlist has already been added to this playlist or is the same playlist.");
+					System.out.println("Could not carry out this command. The specified playlist has already been added to this playlist or is the same playlist.");
 				}
 			}
 		}
@@ -312,14 +302,12 @@ public class MediaPlayer {
 	 */
 	public void playAll(String[] param) {
 		if (param.length < 1 || param.length > 3) {
-			System.out
-					.println("Invalid syntax for 'playp'. Should be of the form: playp [--playlist-name] (OPTIONAL:[--seconds])");
+			System.out.println("Invalid syntax for 'playp'. Should be of the form: playp [--playlist-name] (OPTIONAL:[--seconds])");
 		} else {
 			PlayList p = new PlayList(param[0]);
 			int index = playLists.indexOf(p);
 			if (index < 0) {
-				System.out
-						.println("The specified playlist hasn't been created.");
+				System.out.println("The specified playlist hasn't been created.");
 			} else {
 				if (param.length == 1) {
 					this.playLists.get(index).play();
@@ -328,8 +316,7 @@ public class MediaPlayer {
 						this.playLists.get(index).play(
 								Double.parseDouble(param[1]));
 					} catch (NumberFormatException ex) {
-						System.out
-								.println("Second parameter must be a number.");
+						System.out.println("Second parameter must be a number.");
 					}
 				}
 			}
@@ -345,8 +332,7 @@ public class MediaPlayer {
 	 */
 	public void playSong(String[] param) {
 		if (param.length < 1 || param.length > 3) {
-			System.out
-					.println("Invalid syntax for 'playm'. Should be of the form: playm [--mp3-file] (OPTIONAL:[--seconds])");
+			System.out.println("Invalid syntax for 'playm'. Should be of the form: playm [--mp3-file] (OPTIONAL:[--seconds])");
 		} else {
 			File f = new File(param[0]);
 			if (f.exists()) {
@@ -357,8 +343,7 @@ public class MediaPlayer {
 					try {
 						s.play(Double.parseDouble(param[1]));
 					} catch (NumberFormatException ex) {
-						System.out
-								.println("Second parameter must be a number.");
+						System.out.println("Second parameter must be a number.");
 					}
 				}
 			} else {
